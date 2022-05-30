@@ -6,6 +6,7 @@ const AddTask = ({onAdd}) => {
     const [day,setDay] = useState('')
     const [reminder,setReminder] = useState(false)
 
+    // Submit the form
     const onSubmit = (e)=> {
         e.preventDefault()
         
@@ -16,7 +17,7 @@ const AddTask = ({onAdd}) => {
         }
 
         onAdd({text,day,reminder})
-
+        //set bacj to  default        
         setText('')
         setDay('')
         setReminder(false)
@@ -32,7 +33,7 @@ const AddTask = ({onAdd}) => {
         </div>
         <div className="form-control">
             <label>Day&Time</label>
-            <input type='text' placeholder="Day&Time" value={day}
+            <input type='text' placeholder="Add Day&Time" value={day}
             onChange={(e)=>setDay(e.target.value)}/>
         </div>
         <div className="form-control form-control-check">
