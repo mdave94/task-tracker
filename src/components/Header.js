@@ -13,7 +13,7 @@ const Header = ({title,onAdd,showAdd }) => {
 }
 
 Header.defaultProps = { 
-    title: "Task tracker thing"
+    title: "Task tracker"
 }
 
 
