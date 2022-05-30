@@ -6,19 +6,7 @@ import AddTask from "./components/AddTask";
 
 function App() {
   const [showAddTask,setShowAddTask] = useState(false)
-  const [tasks,setTasks] = useState([
-    {id:1,
-        text:'Doctors Appointment',
-        day:'Feb 5th at 2:30',
-        reminder: true
-   
-       },
-       {
-           id:2,
-           text:'Meeting',
-           day: 'Feb 6th at 1:31pm '
-       }
-    ])
+  const [tasks,setTasks] = useState()
 
 
   //Delete Task
