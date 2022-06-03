@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import {useState,useEffect} from "react";
 import AddTask from "./components/AddTask";
-import { wait } from "@testing-library/user-event/dist/utils";
+//import { wait } from "@testing-library/user-event/dist/utils";
 
 
 function App() {
@@ -28,6 +28,16 @@ function App() {
 
     return data
   }
+
+  const fetchTask = async (id) => {
+    // important at prod
+    const taskURL = 'http://localhost:5000/tasks/'
+    const res = await fetch(taskURL+id)
+    const data = await res.json()
+
+    return data
+  }
+  
   
   //Delete Task
   const deleteTask = async (id)=>{
@@ -42,10 +52,25 @@ function App() {
 
 
   //Reminder function
-  const toggleReminder = (id) =>{
+  const toggleReminder = async (id) =>{
+    const reminderUpdateURL = 'http://localhost:5000/tasks/'
+    const taskToToggle = await fetchTask(id)
+    const updatedTask = {...taskToToggle,reminder: !taskToToggle.reminder}
+   
+
+    const res = await fetch(reminderUpdateURL+id,{
+      method:'PUT',
+      headers:{
+        'Content-type':'application/json'
+      },
+      body:JSON.stringify(updatedTask)
+    })
+
+    const data = await res.json()
+
     setTasks(
-              tasks.map(
-                (task)=>task.id === id ? {...task,reminder: !task.reminder}: task))
+      tasks.map((task)=>
+        task.id === id ? {...task,reminder: data.reminder} : task))
   }
 
 
@@ -62,7 +87,7 @@ const addTask = async (task) =>{
       body:JSON.stringify(task)
     })
 
-    const data = res.json()
+    const data = await  res.json()
     
     // add the current tasks list and add the new one
     setTasks([...tasks,data])
